@@ -11,9 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20141214040623) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "game_boards", force: true do |t|
+    t.string "top_left"
+    t.string "top_middle"
+    t.string "top_right"
+    t.string "middle_left"
+    t.string "middle_middle"
+    t.string "middle_right"
+    t.string "bottom_left"
+    t.string "bottom_middle"
+    t.string "bottom_right"
+  end
 
 end
