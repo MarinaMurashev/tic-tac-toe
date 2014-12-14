@@ -1,0 +1,14 @@
+!!! 5
+%html
+  %head
+    %title
+      TicTacToe
+    = stylesheet_link_tag 'application', media: 'all'
+    = csrf_meta_tags
+  %body
+    %nav.navbar.navbar-default{role: "navication"}
+      .container-fluid
+        .navbar-header
+          = link_to "Home", :root, class: "navbar-brand"
+    = yield
+  = javascript_include_tag 'application'
