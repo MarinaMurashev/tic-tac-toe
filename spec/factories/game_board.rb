@@ -1,5 +1,6 @@
 FactoryGirl.define do
-  factory :game_board_incomplete, class: GameBoard do
+
+  factory :game_board do
     top_left "x"
     top_middle "o"
     top_right "x"

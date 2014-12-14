@@ -10,6 +10,8 @@ class CreateGameBoards < ActiveRecord::Migration
       t.string :bottom_left
       t.string :bottom_middle
       t.string :bottom_right
+
+      t.timestamps
     end
   end
 end

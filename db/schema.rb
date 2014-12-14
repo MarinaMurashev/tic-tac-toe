@@ -17,15 +17,17 @@ ActiveRecord::Schema.define(version: 20141214040623) do
   enable_extension "plpgsql"
 
   create_table "game_boards", force: true do |t|
-    t.string "top_left"
-    t.string "top_middle"
-    t.string "top_right"
-    t.string "middle_left"
-    t.string "middle_middle"
-    t.string "middle_right"
-    t.string "bottom_left"
-    t.string "bottom_middle"
-    t.string "bottom_right"
+    t.string   "top_left"
+    t.string   "top_middle"
+    t.string   "top_right"
+    t.string   "middle_left"
+    t.string   "middle_middle"
+    t.string   "middle_right"
+    t.string   "bottom_left"
+    t.string   "bottom_middle"
+    t.string   "bottom_right"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
