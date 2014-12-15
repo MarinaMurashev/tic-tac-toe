@@ -104,12 +104,14 @@ class GameBoard < ActiveRecord::Base
   end
 
   def player_num_in_fields(player, skip_field = nil)
-    num = 0
-    NILABLE_FIELDS.each do |field|
-      next if skip_field && field == skip_field
-      num += 1 if self[field] == player
+    NILABLE_FIELDS.inject(0) do |result, field|
+      if skip_field && field == skip_field
+        0
+      else
+        result += 1 if self[field] == player
+        result
+      end
     end
-    num
   end
 
   def not_all_blank
