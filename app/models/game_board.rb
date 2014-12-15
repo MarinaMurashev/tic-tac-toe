@@ -106,7 +106,7 @@ class GameBoard < ActiveRecord::Base
   def player_num_in_fields(player, skip_field = nil)
     NILABLE_FIELDS.inject(0) do |result, field|
       if skip_field && field == skip_field
-        0
+        result
       else
         result += 1 if self[field] == player
         result
