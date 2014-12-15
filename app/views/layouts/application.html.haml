@@ -5,8 +5,8 @@
       TicTacToe
     = stylesheet_link_tag 'application', media: 'all'
     = csrf_meta_tags
-  %body
-    %nav.navbar.navbar-default{role: "navication"}
+  %body.container-fluid
+    %nav.navbar.navbar-default{role: "navigation"}
       .container-fluid
         .navbar-header
           = link_to "Home", :root, class: "navbar-brand"
