@@ -24,15 +24,15 @@ FactoryGirl.define do
     bottom_right "o"
   end
 
-  factory :game_board_with_x_winner, class: GameBoard do
-    top_left "x"
-    top_middle "x"
-    top_right "x"
-    middle_left "o"
+  factory :empty_game_board, class: GameBoard do
+    top_left nil
+    top_middle nil
+    top_right nil
+    middle_left nil
     middle_middle nil
     middle_right nil
     bottom_left nil
     bottom_middle nil
-    bottom_right "o"
+    bottom_right nil
   end
 end

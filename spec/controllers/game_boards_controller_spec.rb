@@ -40,4 +40,17 @@ describe GameBoardsController do
       expect(response).to redirect_to root_path
     end
   end
+
+  describe "PUT#update" do
+
+    describe "when game is complete" do
+
+      it "renders the show page of the gameboard if game is complete"
+    end
+
+    describe "when game is not complete" do
+
+      it "redirects to the edit page of the same gameboard if game is not complete"
+    end
+  end
 end
