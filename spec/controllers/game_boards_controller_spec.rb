@@ -53,6 +53,12 @@ describe GameBoardsController do
       get :edit, id: (game_board.id + 1)
       expect(response).to redirect_to root_path
     end
+
+    it "redirect to root path if the game is completed" do
+      game_board = create :game_board_tie
+      get :edit, id: game_board.id
+      expect(response).to redirect_to root_path
+    end
   end
 
   describe "PUT#update" do

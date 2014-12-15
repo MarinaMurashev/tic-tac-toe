@@ -11,7 +11,7 @@ class GameBoardsController < ApplicationController
 
   def edit
     @game_board = GameBoard.find_by(id: params[:id])
-    redirect_to root_path unless @game_board
+    redirect_to root_path unless @game_board && !@game_board.completed?
   end
 
   def update
