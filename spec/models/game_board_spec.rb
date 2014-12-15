@@ -45,7 +45,6 @@ describe GameBoard do
         expect(build(:empty_game_board, middle_middle: nil)).to be_valid
       end
 
-
       it "has middle_right with values 'x' or 'o' or nil" do
         expect(build(:empty_game_board, middle_right: non_valid_square_value)).to_not be_valid
         expect(build(:empty_game_board, middle_right: x)).to be_valid
@@ -72,6 +71,14 @@ describe GameBoard do
         expect(build(:empty_game_board, bottom_right: x)).to be_valid
         expect(build(:empty_game_board, bottom_right: o, top_right: x)).to be_valid
         expect(build(:empty_game_board, bottom_right: nil)).to be_valid
+      end
+
+      it "allows upper case x" do
+        expect(build :empty_game_board, bottom_left: x.upcase).to be_valid
+      end
+
+      it "allows upper case o" do
+        expect(build :empty_game_board, bottom_left: x, bottom_right: o.upcase).to be_valid
       end
     end
 
