@@ -2,23 +2,23 @@
   %table
     %tr#row1
       %td
-        = f.text_field :top_left, class: "square"
+        = f.text_field :top_left, class: "square", disabled: @game_board.top_left.present?
       %td
-        = f.text_field :top_middle, class: "square v"
+        = f.text_field :top_middle, class: "square v", disabled: @game_board.top_middle.present?
       %td
-        = f.text_field :top_right, class: "square"
+        = f.text_field :top_right, class: "square", disabled: @game_board.top_right.present?
     %tr#row2
       %td
-        = f.text_field :middle_left, class: "square h"
+        = f.text_field :middle_left, class: "square h", disabled: @game_board.middle_left.present?
       %td
-        = f.text_field :middle_middle, class: "square v h"
+        = f.text_field :middle_middle, class: "square v h", disabled: @game_board.middle_middle.present?
       %td
-        = f.text_field :middle_right, class: "square h"
+        = f.text_field :middle_right, class: "square h", disabled: @game_board.middle_right.present?
     %tr#row3
       %td
-        = f.text_field :bottom_left, class: "square"
+        = f.text_field :bottom_left, class: "square", disabled: @game_board.bottom_left.present?
       %td
-        = f.text_field :bottom_middle, class: "square v"
+        = f.text_field :bottom_middle, class: "square v", disabled: @game_board.bottom_middle.present?
       %td
-        = f.text_field :bottom_right, class: "square"
+        = f.text_field :bottom_right, class: "square", disabled: @game_board.bottom_right.present?
   = f.submit 'Submit', class: "btn btn-default"
