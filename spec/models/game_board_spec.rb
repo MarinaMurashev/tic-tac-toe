@@ -11,6 +11,32 @@ describe GameBoard do
       expect(build(:game_board, top_right: "y")).to_not be_valid
     end
 
+    describe "on create" do
+      it "is empty for the entire board" do
+        expect(build(:empty_game_board)).to be_valid
+      end
+
+      it "has 1 more x than o if there is an odd number of squares filled in" do
+        expect(
+          build(:empty_game_board, top_left: x, top_right: o, top_middle: x)
+        ).to be_valid
+
+        expect(
+          build(:empty_game_board, top_left:x, top_right: o, top_middle: x, bottom_right: o, bottom_left: o)
+        ).to_not be_valid
+      end
+
+      it "has an equal number of x and o if there is an even number of squares filled in" do
+        expect(
+          build(:empty_game_board, top_left: x, top_right: o, top_middle: x, bottom_left: o)
+        ).to be_valid
+
+        expect(
+          build(:empty_game_board, top_left: x, top_right: o, top_middle: x, bottom_left: x)
+        ).to_not be_valid
+      end
+    end
+
     describe "on update" do
 
       it "is x if o was submitted last" do
@@ -39,8 +65,16 @@ describe GameBoard do
       end
 
       it "is not valid when the attribute being updated is not nil" do
-        game_board = create(:empty_game_board, top_right: "x", top_left: "o")
-        game_board.top_left = "x"
+        game_board = create(:empty_game_board, top_right: x, top_left: o)
+        game_board.top_left = x
+        expect(game_board).to_not be_valid
+      end
+
+      it "is not valid when all attributes are nil" do
+        game_board = create(:empty_game_board)
+        game_board.top_right = game_board.top_middle = game_board.top_left = nil
+        game_board.middle_right = game_board.middle_middle = game_board.middle_left = nil
+        game_board.bottom_right = game_board.bottom_middle = game_board.bottom_left = nil
         expect(game_board).to_not be_valid
       end
     end
@@ -122,7 +156,7 @@ describe GameBoard do
     end
 
     it "is neither when game is incomplete and neither has 3 in a row" do
-      game_board = create(:game_board, top_left: x, top_right: o)
+      game_board = create(:empty_game_board, top_left: x, top_right: o)
       expect(game_board.winners).to eq []
     end
   end

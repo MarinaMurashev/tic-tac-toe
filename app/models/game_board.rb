@@ -1,6 +1,7 @@
 class GameBoard < ActiveRecord::Base
 
-  validate :x_is_first, :correct_turn, :one_submission, :not_overwriting, on: [:update]
+  validate :x_is_first, :correct_turn, :one_submission, :not_overwriting, :not_all_blank, on: [:update]
+  validate :has_correct_ratio_of_x_to_o, on: [:create]
 
   before_validation :nil_if_blank, :lowercase_the_values
 
@@ -97,7 +98,7 @@ class GameBoard < ActiveRecord::Base
   end
 
   def not_overwriting
-    if self.changes[self.changed.first].first.present?
+    if self.changed.present? && self.changes[self.changed.first].first.present?
       self.errors[:base] << "You cannot overwrite a previous submission"
     end
   end
@@ -109,5 +110,24 @@ class GameBoard < ActiveRecord::Base
       num += 1 if self[field] == player
     end
     num
+  end
+
+  def not_all_blank
+    unless NILABLE_FIELDS.detect{ |field| self[field].present? }
+      self.errors[:base] << "You cannot submit an empty game board."
+    end
+  end
+
+  def has_correct_ratio_of_x_to_o
+    num_x = player_num_in_fields(X)
+    num_o = player_num_in_fields(O)
+    sum_x_o = num_x + num_o
+
+    wrong_odd_combination = sum_x_o.odd? && (num_x - num_o) != 1
+    wrong_even_combination = sum_x_o.even? && num_x != num_o
+
+    if wrong_even_combination || wrong_odd_combination
+      self.errors[:base] << "You must submit a valid game"
+    end
   end
 end
