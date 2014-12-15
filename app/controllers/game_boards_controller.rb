@@ -20,10 +20,14 @@ class GameBoardsController < ApplicationController
     @game_board.update_attributes game_board_params
 
     if @game_board.completed?
-      redirect_to root_path
+      redirect_to game_board_path(@game_board.id)
     else
       redirect_to edit_game_board_path(@game_board.id)
     end
+  end
+
+  def show
+    @game_board = GameBoard.find_by(id: params[:id])
   end
 
   private

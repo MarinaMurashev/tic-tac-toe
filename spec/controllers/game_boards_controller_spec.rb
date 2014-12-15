@@ -47,7 +47,12 @@ describe GameBoardsController do
 
     describe "when game is complete" do
 
-      it "renders the show page of the gameboard if game is complete"
+      it "renders the show page of the gameboard if game is complete" do
+        allow_any_instance_of(GameBoard).to receive(:completed?).and_return(true)
+        game_board_id = game_board.id
+        put :update, id: game_board_id, game_board: { bottom_right: "x" }
+        expect(response).to redirect_to game_board_path(game_board_id)
+      end
     end
 
     describe "when game is not complete" do

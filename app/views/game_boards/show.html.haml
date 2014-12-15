@@ -1,0 +1,13 @@
+%table
+  %tr#row1
+    %td.square= @game_board.top_left
+    %td.square.v= @game_board.top_middle
+    %td.square= @game_board.top_right
+  %tr#row2
+    %td.square.h= @game_board.middle_left
+    %td.square.v.h= @game_board.middle_middle
+    %td.square.h= @game_board.middle_right
+  %tr#row3
+    %td.square= @game_board.bottom_left
+    %td.square.v= @game_board.bottom_middle
+    %td.square= @game_board.bottom_right
