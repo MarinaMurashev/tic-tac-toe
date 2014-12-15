@@ -1,0 +1,24 @@
+= form_for @game_board, html: { role: "form" } do |f|
+  %table
+    %tr#row1
+      %td
+        = f.text_field :top_left, class: "square"
+      %td
+        = f.text_field :top_middle, class: "square v"
+      %td
+        = f.text_field :top_right, class: "square"
+    %tr#row2
+      %td
+        = f.text_field :middle_left, class: "square h"
+      %td
+        = f.text_field :middle_middle, class: "square v h"
+      %td
+        = f.text_field :middle_right, class: "square h"
+    %tr#row3
+      %td
+        = f.text_field :bottom_left, class: "square"
+      %td
+        = f.text_field :bottom_middle, class: "square v"
+      %td
+        = f.text_field :bottom_right, class: "square"
+  = f.submit 'Submit', class: "btn btn-default"
