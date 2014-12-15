@@ -1,28 +1,15 @@
-== README
+This is a Ruby on Rails application that is built for playing tic-tac-toe with 2 players, using the same keyboard and mouse.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The link to this deployed application is here: https://nameless-anchorage-2658.herokuapp.com/
 
-Things you may want to cover:
+* Ruby version: 2.1.5
 
-* Ruby version
+* Rails version: 4.1.4
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+*  How to play:
+  1. Click on the New Game button
+  2. X goes first
+  3. Take turns between X and O. Note that it will only accept inputs 'x' and 'o', either capital or lowercase
+  4. Once there is a winner or tie, the game will end and will let you know who won.
+  5. The home page will list your last 10 games. You can view the outcomes of each game.
+  6. If you do not finish a game, you can come back to it by clicking on an incomplete game from the homepage and continue playing.
