@@ -21,6 +21,13 @@ class GameBoard < ActiveRecord::Base
     three_horizontally? || three_vertically? || three_diagonally? || all_filled_in?
   end
 
+  def winners
+    return [X, O] if completed? && !three_horizontally? && !three_vertically? && !three_diagonally?
+    return [X] if completed? && player_num_in_fields(X) > player_num_in_fields(O)
+    return [O] if completed? && player_num_in_fields(X) == player_num_in_fields(O)
+    []
+  end
+
   private
 
   def three_horizontally?
@@ -71,13 +78,8 @@ class GameBoard < ActiveRecord::Base
   end
 
   def correct_turn
-    num_x = num_o = 0
-
-    NILABLE_FIELDS.each do |field|
-      next if field == self.changed.first
-      num_x += 1 if self[field] == X
-      num_o += 1 if self[field] == O
-    end
+    num_x = player_num_in_fields(X, self.changed.first)
+    num_o = player_num_in_fields(O, self.changed.first)
 
     if num_x == num_o && self[self.changed.first] == O
       self.errors[:base] << "It is #{X.capitalize}'s turn"
@@ -98,5 +100,14 @@ class GameBoard < ActiveRecord::Base
     if self.changes[self.changed.first].first.present?
       self.errors[:base] << "You cannot overwrite a previous submission"
     end
+  end
+
+  def player_num_in_fields(player, skip_field = nil)
+    num = 0
+    NILABLE_FIELDS.each do |field|
+      next if skip_field && field == skip_field
+      num += 1 if self[field] == player
+    end
+    num
   end
 end

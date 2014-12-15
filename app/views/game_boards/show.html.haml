@@ -1,3 +1,4 @@
+%h1= "#{@game_board.winners.map(&:upcase).join(" and ")} wins!" if @game_board.winners.present?
 %table
   %tr#row1
     %td.square= @game_board.top_left

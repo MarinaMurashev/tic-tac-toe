@@ -101,4 +101,29 @@ describe GameBoard do
       expect(game_board.completed?).to be_truthy
     end
   end
+
+  describe "#winners" do
+
+    it "is x when x has 3 in a row" do
+      game_board = create(:empty_game_board, top_left: x, top_middle: x,
+        top_right: x, bottom_middle: o, bottom_right: o)
+      expect(game_board.winners).to eq [x]
+    end
+
+    it "is o when o has 3 in a row" do
+      game_board = create(:empty_game_board, top_left: o, top_middle: o,
+        top_right: o, bottom_right: x, bottom_middle: x, middle_middle: x)
+      expect(game_board.winners).to eq [o]
+    end
+
+    it "is both x and o when neither has 3 in a row" do
+      game_board = create(:game_board_tie)
+      expect(game_board.winners).to match_array [x, o]
+    end
+
+    it "is neither when game is incomplete and neither has 3 in a row" do
+      game_board = create(:game_board, top_left: x, top_right: o)
+      expect(game_board.winners).to eq []
+    end
+  end
 end

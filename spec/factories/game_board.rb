@@ -14,13 +14,13 @@ FactoryGirl.define do
 
   factory :game_board_tie, class: GameBoard do
     top_left "x"
-    top_middle "x"
+    top_middle "o"
     top_right "o"
     middle_left "o"
-    middle_middle "o"
+    middle_middle "x"
     middle_right "x"
     bottom_left "x"
-    bottom_middle "o"
+    bottom_middle "x"
     bottom_right "o"
   end
 
