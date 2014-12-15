@@ -13,14 +13,14 @@ describe GameBoardsController do
     end
   end
 
-  describe "GET#new" do
+  describe "POST#create" do
 
     it "creates a new game board record" do
-      expect{ get :new}.to change(GameBoard, :count).by(1)
+      expect{ post :create }.to change(GameBoard, :count).by(1)
     end
 
     it "redirects to the edit page of the new game board record" do
-      get :new
+      post :create
       game_board_id = assigns(:game_board).id
       expect(response).to redirect_to edit_game_board_path(game_board_id)
     end
@@ -49,19 +49,17 @@ describe GameBoardsController do
 
       it "renders the show page of the gameboard if game is complete" do
         allow_any_instance_of(GameBoard).to receive(:completed?).and_return(true)
-        game_board_id = game_board.id
-        put :update, id: game_board_id, game_board: { bottom_right: "x" }
-        expect(response).to redirect_to game_board_path(game_board_id)
+        put :update, id: game_board.id, game_board: { bottom_right: "x" }
+        expect(response).to redirect_to game_board_path(game_board.id)
       end
     end
 
     describe "when game is not complete" do
 
       it "redirects to the edit page of the same gameboard if game is not complete" do
-        allow(game_board).to receive(:completed?).and_return(false)
-        game_board_id = game_board.id
-        put :update, id: game_board_id, game_board: { bottom_right: "x" }
-        expect(response).to redirect_to edit_game_board_path(game_board_id)
+        allow_any_instance_of(GameBoard).to receive(:completed?).and_return(false)
+        put :update, id: game_board.id, game_board: { bottom_right: "x" }
+        expect(response).to redirect_to edit_game_board_path(game_board.id)
       end
     end
   end

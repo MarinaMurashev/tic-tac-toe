@@ -4,9 +4,8 @@ class GameBoardsController < ApplicationController
     @game_boards = GameBoard.all
   end
 
-  def new
-    @game_board = GameBoard.new
-    @game_board.save
+  def create
+    @game_board = GameBoard.create!
     redirect_to edit_game_board_path(@game_board.id)
   end
 
@@ -17,7 +16,7 @@ class GameBoardsController < ApplicationController
 
   def update
     @game_board = GameBoard.find_by(id: params[:id])
-    @game_board.update_attributes game_board_params
+    flash[:error] = @game_board.errors.full_messages.uniq.join(", ") unless @game_board.update_attributes game_board_params
 
     if @game_board.completed?
       redirect_to game_board_path(@game_board.id)
