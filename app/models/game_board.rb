@@ -1,4 +1,9 @@
 class GameBoard < ActiveRecord::Base
+
+  before_validation :nil_if_blank
+
+  NILABLE_FIELDS = %w(top_left top_middle top_right middle_left middle_middle middle_right bottom_left bottom_middle bottom_right)
+
   VALID_SQUARE_VALUES = [
     X = "x",
     O = "o"
@@ -39,5 +44,9 @@ class GameBoard < ActiveRecord::Base
   def has_all_filled_in
     top_left && top_middle && top_right && middle_left && middle_middle &&
       middle_right && bottom_left && bottom_middle && bottom_right
+  end
+
+  def nil_if_blank
+    NILABLE_FIELDS.each{ |attr| self[attr] = nil if self[attr].blank? }
   end
 end

@@ -15,30 +15,31 @@ class GameBoardsController < ApplicationController
     redirect_to root_path unless @game_board
   end
 
-  # def update
-  #   @game_board = GameBoard.find_by(id: params[:id])
-  #   @game_board.update_attributes game_board_params
+  def update
+    @game_board = GameBoard.find_by(id: params[:id])
+    @game_board.update_attributes game_board_params
 
-  #   if @game_board.completed_game? #need to implement
-  #     redirect_to root_path #will be show page
-  #   else
-  #     redirect_to edit_game_board(@game_board.id)
-  # end
+    if @game_board.completed?
+      redirect_to root_path
+    else
+      redirect_to edit_game_board_path(@game_board.id)
+    end
+  end
 
-  # private
+  private
 
-  # def game_board_params
-  #   params.require(:game_board).permit(
-  #     :top_left,
-  #     :top_middle,
-  #     :top_right,
-  #     :middle_left,
-  #     :middle_middle,
-  #     :middle_right,
-  #     :bottom_left,
-  #     :bottom_middle,
-  #     :bottom_right
-  #   )
-  # end
+  def game_board_params
+    params.require(:game_board).permit(
+      :top_left,
+      :top_middle,
+      :top_right,
+      :middle_left,
+      :middle_middle,
+      :middle_right,
+      :bottom_left,
+      :bottom_middle,
+      :bottom_right
+    )
+  end
 
 end

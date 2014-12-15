@@ -43,6 +43,8 @@ describe GameBoardsController do
 
   describe "PUT#update" do
 
+    let(:game_board) { create :game_board }
+
     describe "when game is complete" do
 
       it "renders the show page of the gameboard if game is complete"
@@ -50,7 +52,12 @@ describe GameBoardsController do
 
     describe "when game is not complete" do
 
-      it "redirects to the edit page of the same gameboard if game is not complete"
+      it "redirects to the edit page of the same gameboard if game is not complete" do
+        allow(game_board).to receive(:completed?).and_return(false)
+        game_board_id = game_board.id
+        put :update, id: game_board_id, game_board: { bottom_right: "x" }
+        expect(response).to redirect_to edit_game_board_path(game_board_id)
+      end
     end
   end
 end
