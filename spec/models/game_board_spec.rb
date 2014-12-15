@@ -11,29 +11,38 @@ describe GameBoard do
       expect(build(:game_board, top_right: "y")).to_not be_valid
     end
 
-    it "is x if o was submitted last" do
-      game_board = create(:empty_game_board, top_right: x, top_left: o)
-      game_board.bottom_left = o
-      expect(game_board).to_not be_valid
-    end
+    describe "on update" do
 
-    it "is o if x was submitted last" do
-      game_board = create(:empty_game_board, top_right: x, top_left: o, bottom_right: x)
-      game_board.bottom_left = x
-      expect(game_board).to_not be_valid
-    end
+      it "is x if o was submitted last" do
+        game_board = create(:empty_game_board, top_right: x, top_left: o)
+        game_board.bottom_left = o
+        expect(game_board).to_not be_valid
+      end
 
-    it "is x if no squares were submitted yet" do
-      game_board = create(:empty_game_board)
-      game_board.top_right = o
-      expect(game_board).to_not be_valid
-    end
+      it "is o if x was submitted last" do
+        game_board = create(:empty_game_board, top_right: x, top_left: o, bottom_right: x)
+        game_board.bottom_left = x
+        expect(game_board).to_not be_valid
+      end
 
-    it "is not valid when more than one attribute is being updated" do
-      game_board = create(:empty_game_board)
-      game_board.top_right = o
-      game_board.top_left = x
-      expect(game_board).to_not be_valid
+      it "is x if no squares were submitted yet" do
+        game_board = create(:empty_game_board)
+        game_board.top_right = o
+        expect(game_board).to_not be_valid
+      end
+
+      it "is not valid when more than one attribute is being updated" do
+        game_board = create(:empty_game_board)
+        game_board.top_right = o
+        game_board.top_left = x
+        expect(game_board).to_not be_valid
+      end
+
+      it "is not valid when the attribute being updated is not nil" do
+        game_board = create(:empty_game_board, top_right: "x", top_left: "o")
+        game_board.top_left = "x"
+        expect(game_board).to_not be_valid
+      end
     end
   end
 

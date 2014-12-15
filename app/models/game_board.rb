@@ -1,6 +1,6 @@
 class GameBoard < ActiveRecord::Base
 
-  validate :x_is_first, :correct_turn, :one_submission, on: [:update]
+  validate :x_is_first, :correct_turn, :one_submission, :not_overwriting, on: [:update]
 
   before_validation :nil_if_blank, :lowercase_the_values
 
@@ -91,6 +91,12 @@ class GameBoard < ActiveRecord::Base
   def one_submission
     if self.changed.size > 1
       self.errors[:base] << "You can only submit one."
+    end
+  end
+
+  def not_overwriting
+    if self.changes[self.changed.first].first.present?
+      self.errors[:base] << "You cannot overwrite a previous submission"
     end
   end
 end
