@@ -28,6 +28,13 @@ describe GameBoard do
       game_board.top_right = o
       expect(game_board).to_not be_valid
     end
+
+    it "is not valid when more than one attribute is being updated" do
+      game_board = create(:empty_game_board)
+      game_board.top_right = o
+      game_board.top_left = x
+      expect(game_board).to_not be_valid
+    end
   end
 
   describe "#completed?" do

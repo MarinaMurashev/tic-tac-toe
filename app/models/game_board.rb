@@ -1,8 +1,8 @@
 class GameBoard < ActiveRecord::Base
 
-  validate :x_is_first, :correct_turn
+  validate :x_is_first, :correct_turn, :one_submission, on: [:update]
 
-  before_validation :nil_if_blank
+  before_validation :nil_if_blank, :lowercase_the_values
 
   NILABLE_FIELDS = %w(top_left top_middle top_right middle_left middle_middle middle_right bottom_left bottom_middle bottom_right)
 
@@ -54,6 +54,10 @@ class GameBoard < ActiveRecord::Base
     NILABLE_FIELDS.each{ |attr| self[attr] = nil if self[attr].blank? }
   end
 
+  def lowercase_the_values
+    NILABLE_FIELDS.each{ |attr| self[attr] = self[attr].try(:downcase) }
+  end
+
   def x_is_first
     num_non_nil_fields = 0
     NILABLE_FIELDS.each do |field|
@@ -62,7 +66,7 @@ class GameBoard < ActiveRecord::Base
     end
 
     if num_non_nil_fields == 0 && self.changed.first == O
-      errors.add(self.changed.first.to_sym, "must be #{X}")
+      self.errors[:base] << "#{X.capitalize} goes first"
     end
   end
 
@@ -76,11 +80,17 @@ class GameBoard < ActiveRecord::Base
     end
 
     if num_x == num_o && self[self.changed.first] == O
-      errors.add(self.changed.first.to_sym, "must be #{X}")
+      self.errors[:base] << "It is #{X.capitalize}'s turn"
     end
 
     if num_x > num_o && self[self.changed.first] == X
-      errors.add(self.changed.first.to_sym, "must be #{O}")
+      self.errors[:base] << "It is #{O.capitalize}'s turn"
+    end
+  end
+
+  def one_submission
+    if self.changed.size > 1
+      self.errors[:base] << "You can only submit one."
     end
   end
 end
