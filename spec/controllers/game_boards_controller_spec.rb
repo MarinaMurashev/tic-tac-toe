@@ -26,6 +26,20 @@ describe GameBoardsController do
     end
   end
 
+  describe "GET#show" do
+    let(:game_board) { create :game_board }
+
+    it "redirects to root path if it cannot find game board" do
+      get :show, id: game_board.id + 1
+      expect(response).to redirect_to root_path
+    end
+
+    it "assigns game board to specified id" do
+      get :show, id: game_board.id
+      expect(assigns(:game_board)).to eq game_board
+    end
+  end
+
   describe "GET#edit" do
 
     let(:game_board) { create :game_board }
@@ -44,6 +58,23 @@ describe GameBoardsController do
   describe "PUT#update" do
 
     let(:game_board) { create :game_board }
+
+    it "assigns the game board instance to the one associated with the provided id" do
+      put :update, id: game_board.id, game_board: { bottom_right: GameBoard::X }
+      expect(assigns(:game_board)).to eq game_board
+    end
+
+    it "redirects to root path if the provided id is not associated with a game board" do
+      put :update, id: (game_board.id + 1), game_board: { bottom_right: GameBoard::X }
+      expect(response).to redirect_to root_path
+    end
+
+    it "updates the specified attribute" do
+      game_board = create :empty_game_board
+      put :update, id: game_board.id, game_board: { bottom_right: GameBoard::X }
+      game_board.reload
+      expect(game_board.bottom_right).to eq GameBoard::X
+    end
 
     describe "when game is complete" do
 

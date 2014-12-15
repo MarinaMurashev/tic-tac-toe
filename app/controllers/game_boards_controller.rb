@@ -16,7 +16,11 @@ class GameBoardsController < ApplicationController
 
   def update
     @game_board = GameBoard.find_by(id: params[:id])
-    flash[:error] = @game_board.errors.full_messages.uniq.join(", ") unless @game_board.update_attributes game_board_params
+    return redirect_to root_path unless @game_board
+
+    unless @game_board.update_attributes game_board_params
+      flash[:error] = @game_board.errors.full_messages.uniq.join(", ")
+    end
 
     if @game_board.completed?
       redirect_to game_board_path(@game_board.id)
@@ -27,6 +31,7 @@ class GameBoardsController < ApplicationController
 
   def show
     @game_board = GameBoard.find_by(id: params[:id])
+    redirect_to root_path unless @game_board
   end
 
   private
