@@ -49,7 +49,7 @@ describe GameBoardsController do
 
       it "renders the show page of the gameboard if game is complete" do
         allow_any_instance_of(GameBoard).to receive(:completed?).and_return(true)
-        put :update, id: game_board.id, game_board: { bottom_right: "x" }
+        put :update, id: game_board.id, game_board: { bottom_right: GameBoard::X }
         expect(response).to redirect_to game_board_path(game_board.id)
       end
     end
@@ -58,7 +58,7 @@ describe GameBoardsController do
 
       it "redirects to the edit page of the same gameboard if game is not complete" do
         allow_any_instance_of(GameBoard).to receive(:completed?).and_return(false)
-        put :update, id: game_board.id, game_board: { bottom_right: "x" }
+        put :update, id: game_board.id, game_board: { bottom_right: GameBoard::X }
         expect(response).to redirect_to edit_game_board_path(game_board.id)
       end
     end
